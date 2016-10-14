@@ -271,9 +271,12 @@ public class  EntityTool {
 		return je;
 	}
 	
+	
 	public final static java.sql.Date dateToSqlDate(java.util.Date date){
 		return new java.sql.Date(date.getTime());
 	}
+	
+	
 	
 	@Test
 	public void test(){
