@@ -1,19 +1,24 @@
 package com.renke.core.db;
-import com.mysql.cj.core.MysqlType;
 
 public class JdbcEntity {
 	//预编译sql
 	private String sql;
-	//除主键外，值数组
-	private Object[] values;
-	//除主键外，值类型数组
-	private MysqlType[] types;
-	//除主键外，字段名称数组
+	//tableName
+	private String tableName;
+	//字段名称数组
 	private String[] colNames;
+	//变量名称数组
+	private String[] fieldNames;
+	//值类型数组
+	private Integer[] types;
+	//值数组
+	private Object[] values;
 	//主键字段
 	private String primaryCol;
+	//主键字段
+	private String primaryField;
 	//主键类型
-	private MysqlType primaryType;
+	private Integer primaryType;
 	//主键值
 	private Object primaryVal;
 	public String getSql() {
@@ -22,16 +27,22 @@ public class JdbcEntity {
 	public void setSql(String sql) {
 		this.sql = sql;
 	}
+	public String getTableName() {
+		return tableName;
+	}
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
 	public Object[] getValues() {
 		return values;
 	}
 	public void setValues(Object[] values) {
 		this.values = values;
 	}
-	public MysqlType[] getTypes() {
+	public Integer[] getTypes() {
 		return types;
 	}
-	public void setTypes(MysqlType[] types) {
+	public void setTypes(Integer[] types) {
 		this.types = types;
 	}
 	public String[] getColNames() {
@@ -46,10 +57,16 @@ public class JdbcEntity {
 	public void setPrimaryCol(String primaryCol) {
 		this.primaryCol = primaryCol;
 	}
-	public MysqlType getPrimaryType() {
+	public String getPrimaryField() {
+		return primaryField;
+	}
+	public void setPrimaryField(String primaryField) {
+		this.primaryField = primaryField;
+	}
+	public Integer getPrimaryType() {
 		return primaryType;
 	}
-	public void setPrimaryType(MysqlType primaryType) {
+	public void setPrimaryType(Integer primaryType) {
 		this.primaryType = primaryType;
 	}
 	public Object getPrimaryVal() {
@@ -57,5 +74,11 @@ public class JdbcEntity {
 	}
 	public void setPrimaryVal(Object primaryVal) {
 		this.primaryVal = primaryVal;
+	}
+	public String[] getFieldNames() {
+		return fieldNames;
+	}
+	public void setFieldNames(String[] fieldNames) {
+		this.fieldNames = fieldNames;
 	}
 }

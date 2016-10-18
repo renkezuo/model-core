@@ -1,0 +1,149 @@
+if (StringUtils.indexOfIgnoreCase(typeName, "DECIMAL") != -1 || StringUtils.indexOfIgnoreCase(typeName, "DEC") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "NUMERIC") != -1 || StringUtils.indexOfIgnoreCase(typeName, "FIXED") != -1) {
+            return DECIMAL;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "TINYBLOB") != -1) {
+            // IMPORTANT: "TINYBLOB" must be checked before "TINY"
+            return TINYBLOB;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "TINYTEXT") != -1) {
+            // IMPORTANT: "TINYTEXT" must be checked before "TINY"
+            return TINYTEXT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "TINYINT") != -1 || StringUtils.indexOfIgnoreCase(typeName, "TINY") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "INT1") != -1) {
+
+            // TODO BOOLEAN is a synonym for TINYINT(1)
+            return TINYINT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "MEDIUMINT") != -1
+                // IMPORTANT: "INT24" must be checked before "INT2"
+                || StringUtils.indexOfIgnoreCase(typeName, "INT24") != -1 || StringUtils.indexOfIgnoreCase(typeName, "INT3") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "MIDDLEINT") != -1) {
+            return MEDIUMINT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "SMALLINT") != -1 || StringUtils.indexOfIgnoreCase(typeName, "INT2") != -1) {
+            return SMALLINT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "BIGINT") != -1 || StringUtils.indexOfIgnoreCase(typeName, "SERIAL") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "INT8") != -1) {
+            // SERIAL is an alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE.
+            return BIGINT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "POINT") != -1) {
+            // also covers "MULTIPOINT"
+            // IMPORTANT: "POINT" must be checked before "INT"
+            return GEOMETRY; // TODO think about different MysqlTypes for Spatial Data Types
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "INT") != -1 || StringUtils.indexOfIgnoreCase(typeName, "INTEGER") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "INT4") != -1) {
+            // IMPORTANT: "INT" must be checked after all "*INT*" types
+            return INT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "DOUBLE") != -1 || StringUtils.indexOfIgnoreCase(typeName, "REAL") != -1
+        /* || StringUtils.indexOfIgnoreCase(name, "DOUBLE PRECISION") != -1 is caught by "DOUBLE" check */
+        // IMPORTANT: "FLOAT8" must be checked before "FLOAT"
+                || StringUtils.indexOfIgnoreCase(typeName, "FLOAT8") != -1) {
+            // TODO Exception: If the REAL_AS_FLOAT SQL mode is enabled, REAL is a synonym for FLOAT rather than DOUBLE.
+            return DOUBLE;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "FLOAT") != -1 /*
+                                                                           * || StringUtils.indexOfIgnoreCase(name, "FLOAT4") != -1 is caught by
+                                                                           * "FLOAT" check
+                                                                           */) {
+            // TODO FLOAT(p) [UNSIGNED] [ZEROFILL]. If p is from 0 to 24, the data type becomes FLOAT with no M or D values. If p is from 25 to 53, the data type becomes DOUBLE with no M or D values.
+            return FLOAT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "NULL") != -1) {
+            return NULL;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "TIMESTAMP") != -1) {
+            // IMPORTANT: "TIMESTAMP" must be checked before "TIME"
+            return TIMESTAMP;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "DATETIME") != -1) {
+            // IMPORTANT: "DATETIME" must be checked before "DATE" and "TIME"
+            return DATETIME;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "DATE") != -1) {
+            return DATE;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "TIME") != -1) {
+            return TIME;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "YEAR") != -1) {
+            return YEAR;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "LONGBLOB") != -1) {
+            // IMPORTANT: "LONGBLOB" must be checked before "LONG" and "BLOB"
+            return LONGBLOB;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "LONGTEXT") != -1) {
+            // IMPORTANT: "LONGTEXT" must be checked before "LONG" and "TEXT"
+            return LONGTEXT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "MEDIUMBLOB") != -1 || StringUtils.indexOfIgnoreCase(typeName, "LONG VARBINARY") != -1) {
+            // IMPORTANT: "MEDIUMBLOB" must be checked before "BLOB"
+            // IMPORTANT: "LONG VARBINARY" must be checked before "LONG" and "VARBINARY"
+            return MEDIUMBLOB;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "MEDIUMTEXT") != -1 || StringUtils.indexOfIgnoreCase(typeName, "LONG VARCHAR") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "LONG") != -1) {
+            // IMPORTANT: "MEDIUMTEXT" must be checked before "TEXT"
+            // IMPORTANT: "LONG VARCHAR" must be checked before "VARCHAR"
+            return MEDIUMTEXT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "VARCHAR") != -1 || StringUtils.indexOfIgnoreCase(typeName, "NVARCHAR") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "NATIONAL VARCHAR") != -1 || StringUtils.indexOfIgnoreCase(typeName, "CHARACTER VARYING") != -1) {
+            // IMPORTANT: "CHARACTER VARYING" must be checked before "CHARACTER" and "CHAR"
+            return VARCHAR;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "VARBINARY") != -1) {
+            return VARBINARY;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "BINARY") != -1 || StringUtils.indexOfIgnoreCase(typeName, "CHAR BYTE") != -1) {
+            // IMPORTANT: "BINARY" must be checked after all "*BINARY" types
+            // IMPORTANT: "CHAR BYTE" must be checked before "CHAR"
+            return BINARY;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "LINESTRING") != -1) {
+            // also covers "MULTILINESTRING"
+            // IMPORTANT: "LINESTRING" must be checked before "STRING"
+            return GEOMETRY;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "STRING") != -1
+                // IMPORTANT: "CHAR" must be checked after all "*CHAR*" types
+                || StringUtils.indexOfIgnoreCase(typeName, "CHAR") != -1 || StringUtils.indexOfIgnoreCase(typeName, "NCHAR") != -1
+                || StringUtils.indexOfIgnoreCase(typeName, "NATIONAL CHAR") != -1 || StringUtils.indexOfIgnoreCase(typeName, "CHARACTER") != -1) {
+            return CHAR;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "BOOLEAN") != -1 || StringUtils.indexOfIgnoreCase(typeName, "BOOL") != -1) {
+            return BOOLEAN;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "BIT") != -1) {
+            return BIT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "JSON") != -1) {
+            return JSON;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "ENUM") != -1) {
+            return ENUM;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "SET") != -1) {
+            return SET;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "BLOB") != -1) {
+            return BLOB;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "TEXT") != -1) {
+            return TEXT;
+
+        } else if (StringUtils.indexOfIgnoreCase(typeName, "GEOMETRY") != -1 // also covers "GEOMETRYCOLLECTION"
+                || StringUtils.indexOfIgnoreCase(typeName, "POINT") != -1 // also covers "MULTIPOINT"
+                || StringUtils.indexOfIgnoreCase(typeName, "POLYGON") != -1 // also covers "MULTIPOLYGON"
+        ) {
+            return GEOMETRY; // TODO think about different MysqlTypes for Spatial Data Types
+
+        }
+
+        return UNKNOWN;

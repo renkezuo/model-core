@@ -1,17 +1,20 @@
 package com.renke.core.entity;
+import java.io.Serializable;
+import java.util.Date;
+
 import com.renke.core.annotations.Column;
 import com.renke.core.annotations.Table;
 
 @Table("t_log")
-public class Log {
+public class Model implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Column(isPrimary=true)
 	private Integer id;
 	private String ip;
 	private Integer port;
-	private String time;
+	private Date time;
 	@Column(unColumn=true)
 	private String search;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -30,10 +33,10 @@ public class Log {
 	public void setPort(Integer port) {
 		this.port = port;
 	}
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
-	public void setTime(String time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 	public String getSearch() {
@@ -42,5 +45,4 @@ public class Log {
 	public void setSearch(String search) {
 		this.search = search;
 	}
-	
 }

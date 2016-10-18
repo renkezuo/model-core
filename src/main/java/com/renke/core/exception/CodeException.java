@@ -11,7 +11,7 @@ public class CodeException extends RuntimeException {
 	}
 	
 	public CodeException(int code, String msg, String detailMsg) {
-		super("XDM Error[" + code + "] : " + msg);
+		super("Error[" + code + "] : " + msg);
 		this.code = code;
 		this.msg = msg;
 		this.detailMsg = detailMsg;
@@ -46,7 +46,7 @@ public class CodeException extends RuntimeException {
 	
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("[code:").append(this.code).append(",msg:").append(this.msg)
 				.append(",detail:").append(this.detailMsg).append("]");
 		return buffer.toString();

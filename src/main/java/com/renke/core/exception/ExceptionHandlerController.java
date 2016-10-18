@@ -35,6 +35,7 @@ public class ExceptionHandlerController {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = IllegalArgumentException.class)
 	public String argumentExceptionHandler(HttpServletRequest request,Exception e){
+		e.printStackTrace();
 		request.setAttribute("errorMsg", "参数异常");
 		logger.error("参数异常：{}",e.getMessage());
 		return "500";
@@ -43,6 +44,7 @@ public class ExceptionHandlerController {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = NullPointerException.class)
 	public String nullExceptionHandler(HttpServletRequest request,Exception e){
+		e.printStackTrace();
 		request.setAttribute("errorMsg", "空指针异常");
 		logger.error("空指针异常：{}",e.getMessage());
 		return "500";
