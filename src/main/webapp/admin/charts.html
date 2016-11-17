@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumino - Charts</title>
+<script src="/js/chart-data.js"></script>
+<script src="/js/easypiechart-data.js"></script>
+</head>
+<body>
+	<div class="row" style="padding:20px 0px 0px 0px;">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Line Chart</div>
+				<div class="panel-body">
+					<div class="canvas-wrapper">
+						<canvas class="main-chart" id="line-chart" height="200"
+							width="600"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/.row-->
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Bar Chart</div>
+				<div class="panel-body">
+					<div class="canvas-wrapper">
+						<canvas class="main-chart" id="bar-chart" height="200" width="600"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/.row-->
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">Pie Chart</div>
+				<div class="panel-body">
+					<div class="canvas-wrapper">
+						<canvas class="chart" id="pie-chart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">Doughnut Chart</div>
+				<div class="panel-body">
+					<div class="canvas-wrapper">
+						<canvas class="chart" id="doughnut-chart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/.row-->
+
+	<div class="row">
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body easypiechart-panel">
+					<h4>Label:</h4>
+					<div class="easypiechart" id="easypiechart-blue" data-percent="92">
+						<span class="percent">92%</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body easypiechart-panel">
+					<h4>Label:</h4>
+					<div class="easypiechart" id="easypiechart-orange"
+						data-percent="65">
+						<span class="percent">65%</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body easypiechart-panel">
+					<h4>Label:</h4>
+					<div class="easypiechart" id="easypiechart-teal" data-percent="56">
+						<span class="percent">56%</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body easypiechart-panel">
+					<h4>Label:</h4>
+					<div class="easypiechart" id="easypiechart-red" data-percent="27">
+						<span class="percent">27%</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/.row-->
+</body>
+<script>
+var chart1 = document.getElementById("line-chart").getContext("2d");
+window.myLine = new Chart(chart1).Line(lineChartData, {
+	responsive: true
+});
+var chart2 = document.getElementById("bar-chart").getContext("2d");
+window.myBar = new Chart(chart2).Bar(barChartData, {
+	responsive : true
+});
+var chart3 = document.getElementById("doughnut-chart").getContext("2d");
+window.myDoughnut = new Chart(chart3).Doughnut(doughnutData, {responsive : true
+});
+var chart4 = document.getElementById("pie-chart").getContext("2d");
+window.myPie = new Chart(chart4).Pie(pieData, {responsive : true
+});
+</script>
+
+</html>

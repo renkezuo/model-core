@@ -1,5 +1,6 @@
 package com.renke.core.dao;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,7 +31,11 @@ public class ModelDao {
 	}
 	
 	public List<Model> getList(Model model){
-		return mysql.selectListEntityByEntity(model);
+		return mysql.queryForListE("select * from t_log where ip=?", new Object[]{model.getIp()}, Model.class);
+	}
+	
+	public List<Map<String,Object>> getList2(Model model){
+		return mysql.queryForListM("select * from t_log where ip=?", new Object[]{model.getIp()});
 	}
 	
 }

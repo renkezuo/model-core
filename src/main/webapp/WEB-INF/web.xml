@@ -13,7 +13,7 @@
 	</context-param>
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>xdm-admin-WebAppRoot</param-value>
+		<param-value>model-core-WebAppRoot</param-value>
 	</context-param>
 	
 	<listener>

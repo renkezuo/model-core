@@ -17,23 +17,38 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	<context:component-scan base-package="com.renke.core" />
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+<!-- 	<mvc:interceptors> -->
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/wxpay/**" /> -->
+<!-- 			<bean class="com.renke.core.interceptor.XDMWxInterceptor" /> -->
+<!-- 		</mvc:interceptor> -->
+<!-- 	</mvc:interceptors> -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+
 	<!-- <mvc:resources location="/resources/" mapping="/resources/**" /> -->
 	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<context:property-placeholder location="file:${WEB_CONF}/core/jdbc.properties,file:${WEB_CONF}/core/spring.properties"/>
-<!-- 	<bean id="configurer" -->
-<!-- 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
-<!-- 		<property name="locations"> -->
-<!-- 			<list> -->
-<!-- 				<value>file:${WEB_CONF}/core/jdbc.properties</value> -->
-<!-- 			</list> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
+	<context:property-placeholder
+		location="file:${WEB_CONF}/core/jdbc.properties,file:${WEB_CONF}/core/spring.properties" />
+	<!-- <bean id="configurer" -->
+	<!-- class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+	<!-- <property name="locations"> -->
+	<!-- <list> -->
+	<!-- <value>file:${WEB_CONF}/core/jdbc.properties</value> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- </bean> -->
 	<bean id="tomcatDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
 		lazy-init="false">
 		<property name="driverClassName" value="${mysql.driverClassName}" />
@@ -68,5 +83,6 @@
 		/> -->
 	<!-- <property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
 	<!-- </bean> -->
-	<tx:annotation-driven transaction-manager="mysqlManager" proxy-target-class="true" />
+	<tx:annotation-driven transaction-manager="mysqlManager"
+		proxy-target-class="true" />
 </beans>

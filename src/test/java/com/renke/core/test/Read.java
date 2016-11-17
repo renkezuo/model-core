@@ -10,8 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.mysql.cj.core.MysqlType;
-import com.renke.core.tools.SQLTool;
-
+import com.renke.core.tools.ResultSetTool;
 
 public class Read {
 	@Test
@@ -57,10 +56,10 @@ public class Read {
 		long begin = System.currentTimeMillis();
 		
 		for(int i = 0;i<1000000; i++){
-			SQLTool.getMysqlType("Integer");
+			ResultSetTool.getMysqlType("Integer");
 		}
 		System.out.println(
-				SQLTool.getMysqlType("Integer"));
+				ResultSetTool.getMysqlType("Integer"));
 		System.out.println("map:"+(System.currentTimeMillis() - begin) + "ms");
 
 		

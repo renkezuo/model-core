@@ -1,6 +1,5 @@
 package com.renke.core.tools;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
@@ -34,14 +33,12 @@ public class ToStringTool {
 	public final static String objectToString(Object obj){
 		if(obj == null){
 			return "null";
-		}else if(obj instanceof Serializable){
-			return entityToString((Serializable)obj);
 		}else{
 			return obj.toString();
 		}
 	}
 	
-	public final static String entityToString(Serializable entity){
+	public final static <Entity> String entityToString(Entity entity){
 		StringBuilder msg = new StringBuilder("{");
 		Class<?> clazz = entity.getClass();
 		Field[] fields = clazz.getDeclaredFields();

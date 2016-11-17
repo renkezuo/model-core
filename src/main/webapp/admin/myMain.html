@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>经营管理 - 报表</title>
+</head>
+<body>
+	<div style="width:100%;text-align: center">
+	<h2>测试main</h2>
+	</div>
+	<div id="appendTest">
+	<h2>我在测试append</h2>
+	</div>
+</body>
+<script>
+document.getElementsByTagName("h2")[0].innerHTML = "你好，世界！";
+$("#appendTest").append("<h2>我是append</h2>");
+$("<h2>我是appendTo</h2>").appendTo($("#appendTest"));
+</script>
+</html>

@@ -8,7 +8,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.google.gson.JsonObject;
 
 @ControllerAdvice
 public class ExceptionHandlerController {
@@ -46,6 +49,27 @@ public class ExceptionHandlerController {
 	public String nullExceptionHandler(HttpServletRequest request,Exception e){
 		e.printStackTrace();
 		request.setAttribute("errorMsg", "空指针异常");
+		logger.error("空指针异常：{}",e.getMessage());
+		return "500";
+	}
+	
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(value = CheckException.class)
+	public @ResponseBody JsonObject checkExceptionHandler(HttpServletRequest request,Exception e){
+		e.printStackTrace();
+		JsonObject json = new JsonObject();
+		json.addProperty("errorCode", "4001");
+		json.addProperty("errorMsg", "检查异常");
+		json.addProperty("errorDetailMsg", e.getMessage());
+		logger.error("检查异常：{}",e.getMessage());
+		return json;
+	}
+	
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(value = ApacheHTTPException.class)
+	public String apacheHttpExceptionHandler(HttpServletRequest request,Exception e){
+		e.printStackTrace();
+		request.setAttribute("errorMsg", "apache http 请求异常！");
 		logger.error("空指针异常：{}",e.getMessage());
 		return "500";
 	}

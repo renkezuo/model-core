@@ -77,14 +77,7 @@ public class EntityTool {
 	
 	public final static <Entity> JdbcEntity toSelectByEntity(Entity entity){
 		final JdbcEntity je = assembleJdbcEntity(entity);
-		final StringBuilder result = new StringBuilder();
-		result.append(" select * from ").append(je.getTableName()).append(" where ");
-		final String[] colNames = je.getColNames();
-		for(int i=0;i<colNames.length;i++){
-			result.append(colNames[i]).append("=? and ");
-		}
-		result.delete(result.length()-4,result.length());
-		je.setSql(result.toString());
+		je.setSql(SQLTool.getSelectSql(je.getColNames(), je.getTableName()));
 		return je;
 	}
 	
@@ -219,6 +212,7 @@ public class EntityTool {
 	
 	/**
 	 * 通过entity对象，组装JdbcEntity对象
+	 * 考虑：将field替换fieldName放到JdbcEntity中
 	 * @param entity
 	 * @return
 	 * @author renke.zuo@foxmail.com
@@ -234,9 +228,9 @@ public class EntityTool {
 			clazz = entity.getClass();
 		}
 		Table table = clazz.getAnnotation(Table.class);
-		if(CheckTool.isNull(table)){
-			throw new IllegalArgumentException(clazz.getName()+"必须声明为["+Table.class.getName()+"]注解!");
-		}
+		
+//		CheckTool.throwNull(table, clazz.getName()+"必须声明为["+Table.class.getName()+"]注解!");
+		
 		Field[] fields = clazz.getDeclaredFields();
 		List<Object> values = new ArrayList<>();
 		List<Integer> types = new ArrayList<>();
@@ -266,12 +260,10 @@ public class EntityTool {
 					}
 					//主键时，将主键信息加入JdbcEntity中
 					if(CheckTool.isTrue(col.isPrimary())){
-						if(CheckTool.isNotBlank(je.getPrimaryCol())){
-							throw new IllegalArgumentException(clazz.getName()+"，不支持多主键！");
-						}
+						CheckTool.throwNotBlank(je.getPrimaryCol(), clazz.getName()+"，不支持多主键！");
 						je.setPrimaryCol(colName);
 						je.setPrimaryField(fieldName);
-						je.setPrimaryType(SQLTool.getSqlTypes(field.getType().getSimpleName()));
+						je.setPrimaryType(ResultSetTool.getSqlTypes(field.getType().getSimpleName()));
 						je.setPrimaryVal(fieldVal);
 					}
 				}
@@ -285,13 +277,13 @@ public class EntityTool {
 				//column注解为空，或者字段非否
 				if( CheckTool.isNull(col) || CheckTool.isNotTrue(col.isPrimary()) ){
 					values.add(fieldVal);
-					types.add(SQLTool.getSqlTypes(field.getType().getSimpleName()));
+					types.add(ResultSetTool.getSqlTypes(field.getType().getSimpleName()));
 					colNames.add(colName);
 					fieldNames.add(fieldName);
 				//主键时，如果传入参数为class
 				}else if(CheckTool.isTrue(isClazz)){
 					values.add(fieldVal);
-					types.add(SQLTool.getSqlTypes(field.getType().getSimpleName()));
+					types.add(ResultSetTool.getSqlTypes(field.getType().getSimpleName()));
 					colNames.add(colName);
 					fieldNames.add(fieldName);
 				}
@@ -304,10 +296,11 @@ public class EntityTool {
 			colNames.add(je.getPrimaryCol());
 			fieldNames.add(je.getPrimaryCol());
 		}
-		if(colNames.size()<=0){
-			throw new IllegalArgumentException(clazz.getName()+"没有可操作字段!");
+		
+		CheckTool.throwBlankList(colNames, clazz.getName()+"没有可操作字段!");
+		if(CheckTool.isNotNull(table)){
+			je.setTableName(table.value());
 		}
-		je.setTableName(table.value());
 		je.setValues(values.toArray());
 		je.setTypes(types.toArray(new Integer[types.size()]));
 		je.setColNames(colNames.toArray(new String[colNames.size()]));
@@ -318,8 +311,6 @@ public class EntityTool {
 		fieldNames = null;
 		return je;
 	}
-	
-	
 	
 	public final static java.sql.Date dateToSqlDate(java.util.Date date){
 		return new java.sql.Date(date.getTime());

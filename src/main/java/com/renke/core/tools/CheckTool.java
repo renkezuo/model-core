@@ -1,5 +1,7 @@
 package com.renke.core.tools;
 
+import java.util.List;
+
 import com.renke.core.exception.CheckException;
 
 public class CheckTool {
@@ -30,6 +32,9 @@ public class CheckTool {
 	}
 	public final static boolean isBlankArray(Object[] arr){
 		return arr == null || arr.length <= 0;
+	}
+	public final static boolean isBlankList(List<?> list){
+		return list == null || list.size() <= 0;
 	}
 	
 	public final static void throwBlank(Object obj , String msg){
@@ -75,6 +80,11 @@ public class CheckTool {
 	
 	public final static void throwBlankArray(Object[] arr , String msg){
 		if(isBlankArray(arr)){
+			throw new CheckException(msg);
+		}
+	}
+	public final static void throwBlankList(List<?> list , String msg){
+		if(isBlankList(list)){
 			throw new CheckException(msg);
 		}
 	}
