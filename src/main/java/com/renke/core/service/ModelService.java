@@ -36,4 +36,8 @@ public class ModelService {
 	public List<Map<String,Object>> selectList2(Model log){
 		return modelDao.getList2(log);
 	}
+	
+	public void printDBProduct(){
+		modelDao.getDBDriver();
+	}
 }

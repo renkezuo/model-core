@@ -100,4 +100,9 @@ public class HTTPTools {
 			throw new ApacheHTTPException(e.getMessage());
 		}
 	}
+	
+	public static void parsePost(){
+		
+	}
+	
 }

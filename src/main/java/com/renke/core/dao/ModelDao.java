@@ -38,4 +38,7 @@ public class ModelDao {
 		return mysql.queryForListM("select * from t_log where ip=?", new Object[]{model.getIp()});
 	}
 	
+	public void getDBDriver(){
+		System.out.println(mysql.getDataSource());
+	}
 }

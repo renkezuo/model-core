@@ -1,5 +1,10 @@
 package com.renke.core.controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 import javax.annotation.Resource;
@@ -133,6 +138,58 @@ public class ModelController {
 		logger.info("cache");
 		return "test/cache";
 	}
+	
+	@RequestMapping("/sqlite")
+	public String sqlite(HttpServletRequest request,HttpServletResponse response){
+		String hello = request.getParameter("hello");
+		Connection c = null;
+		PreparedStatement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:F:/tools/sqlite/springdb.db");
+			String sql = "insert into t_menu(id,menu_name) values(?,?)";
+			stmt = c.prepareStatement(sql);
+			stmt.setInt(1, 1);
+			stmt.setString(2, hello);
+			stmt.execute();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("emoji", hello);
+		return "test/emoji";
+	}
+	
+	@RequestMapping("/emoji")
+	public String emoji(HttpServletRequest request,HttpServletResponse response){
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:F:/tools/sqlite/springdb.db");
+			String sql = "select menu_name from t_menu";
+			stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+//			String id = rs.getString(1);
+			String hello = rs.getString(1);
+//			rs.next();
+//			System.out.println("id-->"+id);
+			System.out.println(hello);
+			request.setAttribute("emoji", hello);
+//			stmt.execute();
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		modelService.printDBProduct();
+		return "test/emoji";
+	}
+	
+	
 	
 	class InsertThread implements Runnable {
 		private int times = 0;

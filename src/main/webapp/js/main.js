@@ -39,3 +39,15 @@ function isNull(obj) {
 	}
 	return false;
 }
+//formData提交文件
+//var formData = new FormData();
+//formData.append('file', $('#file')[0].files[0]);
+//$.ajax({
+//    url: '/upload',
+//    type: 'POST',
+//    cache: false,
+//    data: formData,
+//    processData: false,
+//    contentType: false
+//}).done(function(res) {
+//}).fail(function(res) {});

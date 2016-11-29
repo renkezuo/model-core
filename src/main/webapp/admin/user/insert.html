@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>用户新增</title>
+</head>
+<body>
+	<script>
+		function addUser(){
+			$('#userForm').ajaxSubmit(function (event){
+				alert(event);
+			});
+// 			var formData = new FormData($('#userForm')[0]);
+// 			formData = new FormData();
+// 			formData.append("file2",document.getElementById("file2").files[0]);
+// 			var json = {
+// 				phone:'1111',
+// 				login_key:'2222'
+// 			}
+// 			$.ajax({
+// 			    url: '/user/insert.do',
+// 			    type: 'post',
+// 			    cache: false,
+// 			    data: formData,
+// 			    processData: false,
+// 			    contentType: false,
+// 			    success:function(res){
+// 			    	alert("success:"+res.msg);
+// 			    },
+// 			    error:function(e){
+// 			    	alert("error:"+e.msg);
+// 			    }
+// 			});
+		}
+	</script>
+	<div class="row" style="padding:20px 0px 0px 0px;">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">添加用户</div>
+				<div class="panel-body">
+					<form id="userForm" action="/user/insert.do" method="post" role="form" enctype="multipart/form-data">
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="form-control"  value="------"  name="phone" placeholder="手机号">
+						</div>
+						<div class="form-group">
+							<input type="password" name="login_pwd" class="form-control" placeholder="密码">
+						</div>
+						<div class="form-group">
+							<textarea name="hello"rows="5" style="width:98%"></textarea>
+						</div>
+						<div class="form-group">
+							<!-- 90%解决，手机浏览器横向滚动条的问题 -->
+							<input type="file" name="file" style="width:90%" />
+						</div>
+						<div class="form-group">
+							<input type="password" name="nickname" class="form-control" placeholder="昵称">
+						</div>
+						<input type="button" class="btn btn-primary" onclick="addUser();" value="提交">
+<!-- 						<input type="submit" class="btn btn-primary" value="提交"> -->
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		addUser();
+	</script>
+</body>
+</html>

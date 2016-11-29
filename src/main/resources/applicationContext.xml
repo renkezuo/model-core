@@ -41,15 +41,15 @@
 	</bean>
 	<context:property-placeholder
 		location="file:${WEB_CONF}/core/jdbc.properties,file:${WEB_CONF}/core/spring.properties" />
-	<!-- <bean id="configurer" -->
-	<!-- class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
-	<!-- <property name="locations"> -->
-	<!-- <list> -->
-	<!-- <value>file:${WEB_CONF}/core/jdbc.properties</value> -->
-	<!-- </list> -->
-	<!-- </property> -->
-	<!-- </bean> -->
-	<bean id="tomcatDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+<!-- 	<bean id="configurer" -->
+<!-- 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+<!-- 		<property name="locations"> -->
+<!-- 			<list> -->
+<!-- 				<value>file:${WEB_CONF}/core/jdbc.properties</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	<bean id="mysqlDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
 		lazy-init="false">
 		<property name="driverClassName" value="${mysql.driverClassName}" />
 		<property name="url" value="${mysql.url}" />
@@ -60,14 +60,30 @@
 		<property name="validationInterval" value="${mysql.validationInterval}" />
 		<property name="validationQuery" value="${mysql.validationQuery}" />
 	</bean>
+	
+	<bean id="sqliteDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+		lazy-init="false" primary="true">
+		<property name="driverClassName" value="${sqlite.driverClassName}" />
+		<property name="url" value="${sqlite.url}" />
+		<property name="initSQL" value="${sqlite.initSQL}" />
+	</bean>
 
 	<bean id="mysql" class="com.renke.core.db.JdbcExecutor">
-		<property name="dataSource" ref="tomcatDataSource" />
+		<property name="dataSource" ref="mysqlDataSource" />
+	</bean>
+
+	<bean id="sqlite" class="com.renke.core.db.JdbcExecutor">
+		<property name="dataSource" ref="sqliteDataSource" />
 	</bean>
 
 	<bean id="mysqlManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="tomcatDataSource" />
+		<property name="dataSource" ref="mysqlDataSource" />
+	</bean>
+	
+	<bean id="sqliteManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="sqliteDataSource" />
 	</bean>
 
 	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
@@ -83,6 +99,5 @@
 		/> -->
 	<!-- <property name="sqlSessionFactory" ref="sqlSessionFactory" /> -->
 	<!-- </bean> -->
-	<tx:annotation-driven transaction-manager="mysqlManager"
-		proxy-target-class="true" />
+	<tx:annotation-driven proxy-target-class="true" />
 </beans>
