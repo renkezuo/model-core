@@ -31,15 +31,15 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.renke.core.pay.wxpay.api.HttpsRequest;
-import com.renke.core.pay.wxpay.api.RandomStringGenerator;
+import com.renke.core.pay.wxpay.api.RandomString;
 import com.renke.core.pay.wxpay.api.Signature;
 import com.renke.core.pay.wxpay.api.Util;
 import com.renke.core.pay.wxpay.api.WXpayApi;
 import com.renke.core.pay.wxpay.config.WXpayConfig;
 import com.renke.core.pay.wxpay.last.Config;
 import com.renke.core.pay.wxpay.util.WXpayCore;
-import com.renke.core.tools.HTTPTools;
-import com.renke.core.tools.ImageTools;
+import com.renke.core.tools.HTTPTool;
+import com.renke.core.tools.ImageTool;
 
 @Controller
 @RequestMapping("/wxpay")
@@ -124,7 +124,7 @@ public class WxpayController {
 	@RequestMapping(value = "/jssdk")
 	public String payConfig(HttpServletRequest request){
 		String timeStamp = String.valueOf(System.currentTimeMillis());
-		String nonceStr = RandomStringGenerator.getRandomStringByLength(32);
+		String nonceStr = RandomString.getRandomStringByLength(32);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("appid", WXpayConfig.pay_app_id);
 		map.put("timeStamp", timeStamp);
@@ -145,7 +145,7 @@ public class WxpayController {
 //		String outTradeNo = sdf.format(System.currentTimeMillis());
 //		Double amt = 100d;
 //		String tradeType = "JSAPI";
-		HTTPTools.setWxWebConfig(request);
+		HTTPTool.setWxWebConfig(request);
 //		String ip = HTTPTools.getRemoteIp(request);
 //		WxMpInMemoryConfigStorage wmcs = new WxMpInMemoryConfigStorage();
 //		wmcs.setAppId(WXpayConfig.pay_app_id);
@@ -298,7 +298,7 @@ public class WxpayController {
 		BitMatrix bitMatrix;
 		try {
 			bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
-			ImageTools.writeToStream(bitMatrix, format, response.getOutputStream());
+			ImageTool.writeToStream(bitMatrix, format, response.getOutputStream());
 			response.flushBuffer();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -337,7 +337,7 @@ public class WxpayController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("appid", Config.appid);
 		params.put("mch_id", Config.mch_id);
-		params.put("nonce_str", RandomStringGenerator.getRandomStringByLength(32));
+		params.put("nonce_str", RandomString.getRandomStringByLength(32));
 		params.putAll(map);
 		params.remove("sign");
 		params.put("sign", Signature.getSign(params));

@@ -195,7 +195,7 @@ public class Util {
 	public static WebConfig getConfig(String url,String signType){
 		WebConfig config = new WebConfig();
 		long timestamp = System.currentTimeMillis() / 1000;
-		String noncestr = RandomStringGenerator.getRandomStringByLength(32);
+		String noncestr = RandomString.getRandomStringByLength(32);
 		String signStr = "noncestr="+noncestr+"&timestamp=" + timestamp + "&url="+url;
 		if("SHA".equals(signType)){
 			config.setSignature(DigestUtils.sha1Hex(signStr));

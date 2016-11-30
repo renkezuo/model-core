@@ -21,6 +21,7 @@ public class ByteArray {
 	}
 	
 	public final void clear(){
+		this.mark = 0;
 		this.position = 0;
 		this.limit = -1;
 		this.array = null;

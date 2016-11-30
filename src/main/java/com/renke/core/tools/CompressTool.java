@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CompressTools {
+public class CompressTool {
 	/***
 	 * 读取文件的每一行，trim()
 	 * 将所有',|;|:|=|+|-|*|/|%|(|)|{|}|[|]|<|>|\|"|''之后之前的空白字符去掉

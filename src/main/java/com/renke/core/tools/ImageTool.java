@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.google.zxing.common.BitMatrix;
 
-public class ImageTools {
+public class ImageTool {
 	private static final int BLACK = 0xFF000000;// 用于设置图案的颜色
 	private static final int WHITE = 0xFFFFFFFF; // 用于背景色
 	public static BufferedImage toBufferedImage(BitMatrix matrix) {

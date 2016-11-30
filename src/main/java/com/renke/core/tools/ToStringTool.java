@@ -6,28 +6,45 @@ import java.util.List;
 import java.util.Map;
 
 public class ToStringTool {
-	public final static String mapToString(Map<String,Object> map){
+	
+	public final static String mapToString(Map<String,Object> map,boolean isEntity){
 		StringBuilder msg = new StringBuilder("{");
 		Iterator<String> it = map.keySet().iterator();
 		while(it.hasNext()){
 			String key = it.next();
-			msg.append(key).append(":").append(objectToString(map.get(key))).append(",");
+			if(isEntity){
+				msg.append(key).append(":").append(entityToString(map.get(key))).append(",");
+			}else{
+				msg.append(key).append(":").append(objectToString(map.get(key))).append(",");
+			}
 		}
 		msg.deleteCharAt(msg.length()-1).append("}");
 		return msg.toString();
 	}
 	
-	public final static <T> String arrayToString(T[] ts){
-		StringBuilder msg = new StringBuilder("{");
+	public final static String mapToString(Map<String,Object> map){
+		return mapToString(map,false);
+	}
+	
+	public final static <T> String arrayToString(T[] ts,boolean isEntity){
+		StringBuilder msg = new StringBuilder("[");
 		for(int i=0;i<ts.length;i++){
-			msg.append(objectToString(ts[i])).append(",");
+			if(isEntity){
+				msg.append(entityToString(ts[i])).append(",");
+			}else{
+				msg.append(objectToString(ts[i])).append(",");
+			}
 		}
-		msg.deleteCharAt(msg.length()-1).append("}");
+		msg.deleteCharAt(msg.length()-1).append("]");
 		return msg.toString();
+	}
+	
+	public final static String listToString(List<?> ls,boolean isEntity){
+		return arrayToString(ls.toArray(),isEntity);
 	}
 	
 	public final static String listToString(List<?> ls){
-		return arrayToString(ls.toArray());
+		return arrayToString(ls.toArray(),false);
 	}
 	
 	public final static String objectToString(Object obj){
@@ -48,7 +65,6 @@ public class ToStringTool {
 				field.setAccessible(true);
 				msg.append(field.get(entity));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				msg.append("null");
 			}
 			msg.append(",");
