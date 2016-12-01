@@ -19,6 +19,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.renke.core.entity.ByteArray;
 import com.renke.core.entity.Param;
@@ -29,6 +31,7 @@ import com.renke.core.pay.wxpay.api.RandomString;
 import com.renke.core.pay.wxpay.api.Util;
 
 public class HTTPTool {
+	private static final Logger logger = LoggerFactory.getLogger(HTTPTool.class);
 	private static final String[] PROXY_REMOTE_IP_ADDRESS = { "X-Real-IP", "X-Forwarded-For", "Proxy-Client-IP",
 			"WL-Proxy-Client-IP", "HTTP_CLIENT_IP" };
 
@@ -118,6 +121,7 @@ public class HTTPTool {
 			int len = 0;
 			//临时数据
 			PostDataTmp pdt = new PostDataTmp();
+			long begin = System.currentTimeMillis();
 			//每读一次，保存上一次和本次的内容，和段标记做比较，有则分析，没则继续
 			while( (len=is.read(buf) )!=-1){
 				//组装数据
@@ -131,6 +135,7 @@ public class HTTPTool {
 					break;
 				}
 			}
+			logger.info("parsePostTime:{}ms",System.currentTimeMillis()-begin);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -289,6 +294,7 @@ public class HTTPTool {
 									//直接追加文件
 									FileTool.appendBytes(param.tmpPath, array.getArray(),mark,pos-mark-2);
 								}
+								param.key = param.key.replaceAll("\"", "");
 								param.status = true;
 								pdt.data = null;
 							}
