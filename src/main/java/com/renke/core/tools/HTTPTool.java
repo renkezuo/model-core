@@ -196,7 +196,7 @@ public class HTTPTool {
 							param.key = params[1].split("=")[1];
 							param.type = Type.TEXT;
 							if(params.length==3){
-								param.fileName = params[2].split("=")[1];
+								param.fileName = params[2].split("=")[1].replaceAll("\"", "");
 								param.type = Type.FILE;
 								String tmpName = System.currentTimeMillis()+RandomString.getRandomStringByLength(10);
 								param.tmpPath = "/tmp/"+tmpName;

@@ -36,6 +36,8 @@ public class WXAPIController {
 		jsapiSignature.setUrl(url);
 		jsapiSignature.setSignature(signature);
 		request.setAttribute("config", "");
+		logger.info("123123123");
+		
 		return null;
 	}
 }

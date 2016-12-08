@@ -23,13 +23,19 @@
 				<constructor-arg value="UTF-8" />
 			</bean>
 		</mvc:message-converters>
+	
 	</mvc:annotation-driven>
-<!-- 	<mvc:interceptors> -->
-<!-- 		<mvc:interceptor> -->
-<!-- 			<mvc:mapping path="/wxpay/**" /> -->
-<!-- 			<bean class="com.renke.core.interceptor.XDMWxInterceptor" /> -->
-<!-- 		</mvc:interceptor> -->
-<!-- 	</mvc:interceptors> -->
+	
+	<mvc:interceptors>
+<!-- <bean class="com.renke.core.interceptor.SecurityInterceptor" /> -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/model/cache.do"/>
+			<bean class="com.renke.core.interceptor.SecurityInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
 

@@ -6,7 +6,7 @@ import com.renke.core.annotations.Table;
 import com.renke.core.tools.ToStringTool;
 
 @Table("t_user")
-public class User implements Serializable{
+public class AdminUser implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Column(isPrimary=true)
 	private Integer id;

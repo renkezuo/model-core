@@ -11,10 +11,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSyntaxException;
-import com.renke.core.IFreemarkerMarker;
 
 @Component("gsonUtils")
-public class GsonUtils extends IFreemarkerMarker {
+public class GsonUtils {
 	public static JsonElement parse(String jeString) {
 		try {
 			JsonElement jsonElement = new JsonParser().parse(jeString);

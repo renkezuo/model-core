@@ -55,4 +55,21 @@ public class RedisTool {
     	buf = null;
     	return token;
     }
+    
+    public synchronized static String setRedisValueToKey(String redis_key,String redis_value){
+		ByteBuffer buf = ByteBuffer.allocate(1024);
+    	try {
+    		loginRedis();
+			socketChannel.write(ByteBuffer.wrap(("set "+redis_key+" \r\n").getBytes()));
+			socketChannel.read(buf);
+			byte[] bytes = buf.array();
+			if(bytes[0] == '-'){
+				return null;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	buf = null;
+    	return redis_value;
+    }
 }
